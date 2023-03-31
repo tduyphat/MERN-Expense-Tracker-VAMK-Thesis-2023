@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import Button from "@mui/material/Button"
+import NavBar from "./components/NavBar";
+import TransactionForm from "./components/TransactionForm";
 
 const InitialForm = {
   amount: 0,
@@ -43,6 +46,10 @@ function App() {
 
   return (
     <div>
+      <NavBar/>
+
+      <TransactionForm/>
+      
       <form onSubmit={handleSubmit}>
         <input
           type="number"
@@ -64,7 +71,7 @@ function App() {
           value={form.date}
           onChange={handleInput}
         />
-        <button type="submit">Submit</button>
+        <Button variant="contained" type="submit">Submit</Button>
       </form>
 
       <br />
