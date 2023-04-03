@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Button from "@mui/material/Button";
 
 export default function TransactionForm() {
@@ -19,24 +19,22 @@ export default function TransactionForm() {
             sx={{ marginRight: 5 }}
             id="outlined-basic"
             label="Amount"
-            size="small"
             variant="outlined"
+            size="small"
           />
           <TextField
             sx={{ marginRight: 5 }}
             id="outlined-basic"
             label="Description"
-            size="small"
             variant="outlined"
+            size="small"
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Transaction Date"
-              inputFormat="MM/DD/YYYY"
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-              size="small"
+            <DesktopDatePicker
               sx={{ marginRight: 5 }}
+              label="Transaction Date"
+              onChange={handleChange}
+              slotProps={{ textField: { size: "small" } }}
             />
           </LocalizationProvider>
           <Button type="submit" variant="contained">
