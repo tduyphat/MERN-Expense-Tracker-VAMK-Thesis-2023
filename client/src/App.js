@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import TransactionForm from "./components/TransactionForm";
+import TransactionList from "./components/TransactionList";
+import { Container } from "@mui/material";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -18,29 +20,10 @@ function App() {
   return (
     <div>
       <NavBar />
-
-      <TransactionForm fetchTransactions={fetchTransactions}/>
-
-      <br />
-
-      <section>
-        <table>
-          <thead>
-            <td>Amount</td>
-            <td>Description</td>
-            <td>Date</td>
-          </thead>
-          <tbody>
-            {transactions.map((trx) => (
-              <tr key={trx._id}>
-                <td>{trx.amount}</td>
-                <td>{trx.description}</td>
-                <td>{trx.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <Container>
+        <TransactionForm fetchTransactions={fetchTransactions} />
+        <TransactionList transactions={transactions} />
+      </Container>
     </div>
   );
 }
