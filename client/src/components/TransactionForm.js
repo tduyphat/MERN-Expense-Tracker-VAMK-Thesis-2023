@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -14,8 +14,17 @@ const InitialForm = {
   date: new Date(),
 };
 
-export default function TransactionForm({ fetchTransactions }) {
+export default function TransactionForm({
+  fetchTransactions,
+  editTransaction,
+}) {
   const [form, setForm] = useState(InitialForm);
+
+  useEffect(() => {
+    if (editTransaction !== {}) {
+      setForm(editTransaction);
+    }
+  }, [editTransaction]);
 
   function handleChange(e) {
     console.log(e);
@@ -28,6 +37,15 @@ export default function TransactionForm({ fetchTransactions }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const res = editTransaction === {} ? create() : update()
+
+    if (res.ok) {
+      setForm(InitialForm);
+      fetchTransactions();
+    }
+  }
+
+  async function create() {
     const res = await fetch("http://localhost:4000/transaction", {
       method: "POST",
       body: JSON.stringify(form),
@@ -36,10 +54,19 @@ export default function TransactionForm({ fetchTransactions }) {
       },
     });
 
-    if (res.ok) {
-      setForm(InitialForm);
-      fetchTransactions()
-    }
+    return res
+  }
+
+  async function update() {
+    const res = await fetch(`http://localhost:4000/transaction/${editTransaction._id}`, {
+      method: "PATCH",
+      body: JSON.stringify(form),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    return res
   }
 
   return (
@@ -78,9 +105,16 @@ export default function TransactionForm({ fetchTransactions }) {
               )}
             />
           </LocalizationProvider>
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
+          {editTransaction !== {} && (
+            <Button type="submit" variant="secondary">
+              Update
+            </Button>
+          )}
+          {editTransaction === {} && (
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          )}
         </form>
       </CardContent>
     </Card>
