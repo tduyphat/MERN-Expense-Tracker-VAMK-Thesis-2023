@@ -95,9 +95,10 @@ export default function TransactionForm({
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
+            type="number"
             sx={{ marginRight: 5 }}
             id="outlined-basic"
-            label="Amount"
+            label="Amount (in EUR)"
             name="amount"
             variant="outlined"
             size="small"
@@ -105,6 +106,7 @@ export default function TransactionForm({
             onChange={handleChange}
           />
           <TextField
+            type="text"
             sx={{ marginRight: 5 }}
             id="outlined-basic"
             label="Description"

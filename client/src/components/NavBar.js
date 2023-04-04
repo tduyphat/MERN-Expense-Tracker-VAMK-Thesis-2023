@@ -12,7 +12,7 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" className="text-white">Expense Manager</Link>
+            <Link to="/" className="text-white">Expense Tracker</Link>
           </Typography>
           <Link to="/login" className="text-white">
             <Button color="inherit">Login</Button>
