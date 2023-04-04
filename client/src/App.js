@@ -25,6 +25,7 @@ function App() {
         <TransactionForm
           fetchTransactions={fetchTransactions}
           editTransaction={editTransaction}
+          setEditTransaction={setEditTransaction}
         />
         <TransactionList
           transactions={transactions}

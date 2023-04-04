@@ -17,17 +17,22 @@ const InitialForm = {
 export default function TransactionForm({
   fetchTransactions,
   editTransaction,
+  setEditTransaction,
 }) {
   const [form, setForm] = useState(InitialForm);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (editTransaction !== {}) {
+    if (editTransaction.amount !== undefined) {
       setForm(editTransaction);
+      setEditMode(true);
+    } else {
+      setForm(InitialForm);
+      setEditMode(false);
     }
   }, [editTransaction]);
 
   function handleChange(e) {
-    console.log(e);
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
@@ -35,12 +40,22 @@ export default function TransactionForm({
     setForm({ ...form, date: newValue });
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    const res = editTransaction === {} ? create() : update()
+    // editTransaction.amount === undefined ? create() : update();
+    editMode ? update() : create();
+  }
 
+  function handleCancel() {
+    setForm(InitialForm);
+    setEditMode(false);
+    setEditTransaction({});
+  }
+
+  function reload(res) {
     if (res.ok) {
       setForm(InitialForm);
+      setEditMode(false);
       fetchTransactions();
     }
   }
@@ -54,25 +69,30 @@ export default function TransactionForm({
       },
     });
 
-    return res
+    reload(res);
   }
 
   async function update() {
-    const res = await fetch(`http://localhost:4000/transaction/${editTransaction._id}`, {
-      method: "PATCH",
-      body: JSON.stringify(form),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `http://localhost:4000/transaction/${editTransaction._id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(form),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
-    return res
+    reload(res);
   }
 
   return (
     <Card sx={{ minWidth: 275, marginTop: 10 }}>
       <CardContent>
-        <Typography variant="h6">Add New Transaction</Typography>
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
+          Add New Transaction
+        </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
             sx={{ marginRight: 5 }}
@@ -105,12 +125,26 @@ export default function TransactionForm({
               )}
             />
           </LocalizationProvider>
-          {editTransaction !== {} && (
+          {/* {editTransaction.amount !== undefined && (
             <Button type="submit" variant="secondary">
               Update
             </Button>
           )}
-          {editTransaction === {} && (
+          {editTransaction.amount === undefined && (
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          )} */}
+          {editMode ? (
+            <>
+              <Button type="submit" variant="secondary">
+                Update
+              </Button>
+              <Button variant="outlined" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </>
+          ) : (
             <Button type="submit" variant="contained">
               Submit
             </Button>
