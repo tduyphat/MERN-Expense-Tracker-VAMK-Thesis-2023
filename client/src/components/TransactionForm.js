@@ -119,7 +119,7 @@ export default function TransactionForm({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               label="Transaction Date"
-              inputFormat="MM/DD/YYYY"
+              inputFormat="DD.MM.YYYY"
               value={form.date}
               onChange={handleDate}
               renderInput={(params) => (
@@ -139,10 +139,10 @@ export default function TransactionForm({
           )} */}
           {editMode ? (
             <>
-              <Button type="submit" variant="secondary">
+              <Button type="submit" variant="outlined">
                 Update
               </Button>
-              <Button variant="outlined" onClick={handleCancel}>
+              <Button variant="secondary" onClick={handleCancel}>
                 Cancel
               </Button>
             </>

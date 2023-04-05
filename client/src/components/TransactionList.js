@@ -30,7 +30,7 @@ export default function TransactionList({
   }
 
   function formatDate(date) {
-    return dayjs(date).format("DD/MM/YYYY");
+    return dayjs(date).format("DD.MM.YYYY");
   }
 
   return (
