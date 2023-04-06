@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
     username: email,
     _id: user._id,
   };
-  const token = jwt.sign(payload, "secret");
+  const token = jwt.sign(payload, process.env.JWT_SECRET);
   res.json({ message: "Successfully logged in", token });
 });
 
