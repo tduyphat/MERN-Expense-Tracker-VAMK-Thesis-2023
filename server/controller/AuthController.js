@@ -2,6 +2,13 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+const categories = [
+  { label: "Travel", icon: "user" },
+  { label: "Shopping", icon: "user" },
+  { label: "Investment", icon: "user" },
+  { label: "Bills", icon: "user" },
+];
+
 export const register = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   const userExists = await User.findOne({ email });
@@ -20,6 +27,7 @@ export const register = async (req, res) => {
     password: hashedPassword,
     firstName,
     lastName,
+    categories,
   });
   const savedUser = await user.save();
   console.log(savedUser);

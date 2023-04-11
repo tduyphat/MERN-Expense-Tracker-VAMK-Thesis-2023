@@ -39,6 +39,9 @@ export default function Login() {
       Cookie.set("token", token);
       dispatch(getUser(user));
       navigate("/");
+    } else {
+      alert("Wrong email or password!");
+      return;
     }
   };
 

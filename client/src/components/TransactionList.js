@@ -17,6 +17,7 @@ export default function TransactionList({
   transactions,
   fetchTransactions,
   setEditTransaction,
+  editTransaction
 }) {
   const token = Cookies.get("token");
   async function remove(_id) {
@@ -52,6 +53,7 @@ export default function TransactionList({
             <TableRow>
               <TableCell align="center">Amount</TableCell>
               <TableCell align="center">Description</TableCell>
+              <TableCell align="center">Category</TableCell>
               <TableCell align="center">Date</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
@@ -66,6 +68,7 @@ export default function TransactionList({
                   € {row.amount}
                 </TableCell>
                 <TableCell align="center">{row.description}</TableCell>
+                <TableCell align="center">{row.category_id}</TableCell>
                 <TableCell align="center">{formatDate(row.date)}</TableCell>
                 <TableCell align="center">
                   <IconButton
@@ -79,6 +82,7 @@ export default function TransactionList({
                     color="warning"
                     component="label"
                     onClick={() => remove(row._id)}
+                    disabled={editTransaction.amount !== undefined}
                   >
                     <DeleteSharpIcon />
                   </IconButton>

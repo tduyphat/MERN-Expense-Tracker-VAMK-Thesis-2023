@@ -34,6 +34,7 @@ export default function Home() {
         transactions={transactions}
         fetchTransactions={fetchTransactions}
         setEditTransaction={setEditTransaction}
+        editTransaction={editTransaction}
       />
     </Container>
   );
