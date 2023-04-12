@@ -1,51 +1,41 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
 import Cookies from "js-cookie";
+import { setUser } from "../store/auth";
 
 const InitialForm = {
-  amount: 0,
-  description: "",
-  date: new Date(),
-  category_id: "",
+  label: "",
+  icon: "",
 };
 
-export default function TransactionForm({
-  fetchTransactions,
-  editTransaction,
-  setEditTransaction,
-}) {
+const icons = ["user"];
+
+export default function CategoryForm({ editCategory, setEditCategory }) {
   const user = useSelector((state) => state.auth.user);
-  const categories = user?.categories || [];
   const token = Cookies.get("token");
+  const dispatch = useDispatch;
   const [form, setForm] = useState(InitialForm);
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (editTransaction.amount !== undefined) {
-      setForm(editTransaction);
+    if (editCategory._id !== undefined) {
+      setForm(editCategory);
       setEditMode(true);
     } else {
       setForm(InitialForm);
       setEditMode(false);
     }
-  }, [editTransaction]);
+  }, [editCategory]);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-  }
-
-  function handleDate(newValue) {
-    setForm({ ...form, date: newValue });
   }
 
   function handleSubmit(e) {
@@ -56,19 +46,19 @@ export default function TransactionForm({
   function handleCancel() {
     setForm(InitialForm);
     setEditMode(false);
-    setEditTransaction({});
+    setEditCategory({});
   }
 
-  function reload(res) {
+  function reload(res, _user) {
+    setEditMode(false);
     if (res.ok) {
+      dispatch(setUser({ user: _user }));
       setForm(InitialForm);
-      setEditMode(false);
-      fetchTransactions();
     }
   }
 
   async function create() {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/category`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -76,13 +66,16 @@ export default function TransactionForm({
         Authorization: `Bearer ${token}`,
       },
     });
-
-    reload(res);
+    const _user = {
+      ...user,
+      categories: [...user.categories, { ...form }],
+    };
+    reload(res, _user);
   }
 
   async function update() {
     const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/transaction/${editTransaction._id}`,
+      `${process.env.REACT_APP_API_URL}/category/${editCategory._id}`,
       {
         method: "PATCH",
         body: JSON.stringify(form),
@@ -92,13 +85,19 @@ export default function TransactionForm({
         },
       }
     );
-
-    reload(res);
+    const _user = {
+      ...user,
+      categories: user.categories.map((cat) =>
+        cat._id == editCategory._id ? form : cat
+      ),
+    };
+    reload(res, _user);
   }
 
-  function getCategoryNameById(params) {
+  function getCategoryNameById() {
     return (
-      categories.find((category) => category._id === form.category_id) ?? ""
+      user.categories.find((category) => category._id === form.category_id) ??
+      ""
     );
   }
 
@@ -106,53 +105,30 @@ export default function TransactionForm({
     <Card sx={{ minWidth: 275, marginTop: 10 }}>
       <CardContent>
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          Add New Transaction
+          Add New Category
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex" }}>
-          <TextField
-            type="number"
-            sx={{ marginRight: 5 }}
-            id="outlined-basic"
-            label="Amount (in EUR)"
-            name="amount"
-            variant="outlined"
-            size="small"
-            value={form.amount}
-            onChange={handleChange}
-          />
           <TextField
             type="text"
             sx={{ marginRight: 5 }}
             id="outlined-basic"
-            label="Description"
-            name="description"
+            label="Label"
+            name="label"
             variant="outlined"
             size="small"
-            value={form.description}
+            value={form.label}
             onChange={handleChange}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              label="Transaction Date"
-              inputFormat="DD.MM.YYYY"
-              value={form.date}
-              onChange={handleDate}
-              renderInput={(params) => (
-                <TextField sx={{ marginRight: 5 }} size="small" {...params} />
-              )}
-            />
-          </LocalizationProvider>
           <Autocomplete
             value={getCategoryNameById()}
             onChange={(event, newValue) => {
-              const newCategoryId = newValue ? newValue._id : "";
-              setForm({ ...form, category_id: newCategoryId });
+              setForm({ ...form, icon: newValue });
             }}
-            id="controllable-states-demo"
-            options={categories}
+            id="icons"
+            options={icons}
             sx={{ width: 200, marginRight: 5 }}
             renderInput={(params) => (
-              <TextField {...params} size="small" label="Category" />
+              <TextField {...params} size="small" label="Icon" />
             )}
           />
           {editMode ? (
