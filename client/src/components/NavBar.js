@@ -29,6 +29,9 @@ export default function NavBar() {
               Expense Tracker
             </Link>
           </Typography>
+          <Link to="/category" className="text-white">
+            <Button color="inherit">Category</Button>
+          </Link>
           {isAuthenticated && (
             <Button color="inherit" onClick={_logOut}>
               Logout

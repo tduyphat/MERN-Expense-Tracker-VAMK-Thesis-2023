@@ -32,6 +32,9 @@ export default function Register() {
     });
     if (res.ok) {
       navigate("/login");
+    } else {
+      alert("Email address is already in the system!");
+      return;
     }
   };
 

@@ -24,7 +24,8 @@ export default function TransactionForm({
   editTransaction,
   setEditTransaction,
 }) {
-  const { categories } = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
+  const categories = user?.categories || [];
   const token = Cookies.get("token");
   const [form, setForm] = useState(InitialForm);
   const [editMode, setEditMode] = useState(false);
