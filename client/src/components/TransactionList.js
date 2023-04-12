@@ -53,9 +53,7 @@ export default function TransactionList({
 
   return (
     <>
-      <Typography variant="h6" sx={{ marginTop: 10 }}>
-        List of Transactions
-      </Typography>
+      <Typography variant="h6">List of Transactions</Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -75,23 +73,23 @@ export default function TransactionList({
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="center" component="th" scope="row">
-                    € {row.amount}
+                    {row.amount} €
                   </TableCell>
                   <TableCell align="center">{row.description}</TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" sx={{ fontSize: 20 }}>
                     {categoryName(row.category_id)}
                   </TableCell>
                   <TableCell align="center">{formatDate(row.date)}</TableCell>
                   <TableCell align="center">
                     <IconButton
-                      color="primary"
+                      color="warning"
                       component="label"
                       onClick={() => setEditTransaction(row)}
                     >
                       <EditSharpIcon />
                     </IconButton>
                     <IconButton
-                      color="warning"
+                      color="error"
                       component="label"
                       onClick={() => remove(row._id)}
                       disabled={editTransaction.amount !== undefined}

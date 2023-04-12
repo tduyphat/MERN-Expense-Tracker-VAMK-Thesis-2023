@@ -23,12 +23,12 @@ export default function TransactionChart({ data }) {
   });
 
   return (
-    <Paper sx={{ marginTop: 5 }}>
+    <Paper>
       <Chart data={chartData}>
         <ArgumentScale factory={scaleBand} />
         <ArgumentAxis />
         <ValueAxis />
-        <BarSeries valueField="totalExpenses" argumentField="month" />
+        <BarSeries valueField="totalExpenses" argumentField="month" color="green" />
         <Animation />
         <EventTracker />
         <Tooltip />

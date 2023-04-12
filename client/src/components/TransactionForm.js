@@ -157,7 +157,7 @@ export default function TransactionForm({
           />
           {editMode ? (
             <>
-              <Button type="submit" variant="outlined">
+              <Button type="submit" color="success" variant="outlined">
                 Update
               </Button>
               <Button variant="secondary" onClick={handleCancel}>
@@ -165,7 +165,7 @@ export default function TransactionForm({
               </Button>
             </>
           ) : (
-            <Button type="submit" variant="contained">
+            <Button type="submit" color="success" variant="contained">
               Submit
             </Button>
           )}

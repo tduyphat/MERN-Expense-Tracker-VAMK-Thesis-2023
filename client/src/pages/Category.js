@@ -69,14 +69,14 @@ export default function Category() {
 
                 <TableCell align="center">
                   <IconButton
-                    color="primary"
+                    color="warning"
                     component="label"
                     onClick={() => setEdit(row)}
                   >
                     <EditSharpIcon />
                   </IconButton>
                   <IconButton
-                    color="warning"
+                    color="error"
                     component="label"
                     onClick={() => remove(row._id)}
                     disabled={editCategory.label !== undefined}
