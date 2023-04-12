@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Cookie from "js-cookie";
 import { useDispatch } from "react-redux";
-import { getUser } from "../store/auth.js";
+import { setUser } from "../store/auth.js";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function Login() {
 
     if (res.ok) {
       Cookie.set("token", token);
-      dispatch(getUser(user));
+      dispatch(setUser(user));
       navigate("/");
     } else {
       alert("Wrong email or password!");

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getUser } from "./store/auth.js";
+import { setUser } from "./store/auth.js";
 
 function App() {
   const token = Cookies.get("token");
@@ -20,7 +20,7 @@ function App() {
 
     if (res.ok) {
       const user = await res.json();
-      dispatch(getUser(user));
+      dispatch(setUser(user));
     }
     setIsLoading(false);
   }

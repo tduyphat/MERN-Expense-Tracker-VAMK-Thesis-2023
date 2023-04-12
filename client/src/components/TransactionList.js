@@ -19,7 +19,8 @@ export default function TransactionList({
   setEditTransaction,
   editTransaction,
 }) {
-  const user = useSelector((state) => state.auth.user);;
+  const token = Cookies.get("token");
+  const user = useSelector((state) => state.auth.user);
 
   function categoryName(id) {
     if (!user || !user.categories) {
@@ -29,7 +30,6 @@ export default function TransactionList({
     return category ? category.label : "N/A";
   }
 
-  const token = Cookies.get("token");
   async function remove(_id) {
     if (!window.confirm("Are you sure you want to delete this transaction?"))
       return;
