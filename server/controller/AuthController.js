@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const categories = [
-  { label: "Travel", icon: "user" },
-  { label: "Shopping", icon: "user" },
-  { label: "Investment", icon: "user" },
-  { label: "Bills", icon: "user" },
+  { label: "Transportation", icon: "🚗" },
+  { label: "Shopping", icon: "🛒" },
+  { label: "Bills", icon: "🧾" },
+  { label: "Investment", icon: "📈" },
 ];
 
 export const register = async (req, res) => {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [fieldsEmpty, setFieldsEmpty] = useState(true);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,6 +37,12 @@ export default function Register() {
       alert("Email address is already in the system!");
       return;
     }
+  };
+
+  const handleFieldChange = (event) => {
+    const email = event.target.form.elements.email.value;
+    const password = event.target.form.elements.password.value;
+    setFieldsEmpty(email.trim() === "" || password.trim() === "");
   };
 
   return (
@@ -66,6 +73,7 @@ export default function Register() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleFieldChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -76,6 +84,7 @@ export default function Register() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                onChange={handleFieldChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,6 +95,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleFieldChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,6 +107,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={handleFieldChange}
               />
             </Grid>
           </Grid>
@@ -105,6 +116,7 @@ export default function Register() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={fieldsEmpty}
           >
             Sign Up
           </Button>

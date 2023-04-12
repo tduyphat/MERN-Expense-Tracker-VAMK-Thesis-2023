@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,6 +17,7 @@ import { setUser } from "../store/auth.js";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [fieldsEmpty, setFieldsEmpty] = useState(true);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,6 +44,12 @@ export default function Login() {
       alert("Wrong email or password!");
       return;
     }
+  };
+
+  const handleFieldChange = (event) => {
+    const email = event.target.form.elements.email.value;
+    const password = event.target.form.elements.password.value;
+    setFieldsEmpty(email.trim() === "" || password.trim() === "");
   };
 
   return (
@@ -72,6 +79,7 @@ export default function Login() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleFieldChange}
           />
           <TextField
             margin="normal"
@@ -82,12 +90,14 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleFieldChange}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={fieldsEmpty}
           >
             Sign In
           </Button>

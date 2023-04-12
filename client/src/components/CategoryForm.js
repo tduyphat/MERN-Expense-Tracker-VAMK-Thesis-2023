@@ -15,7 +15,7 @@ const InitialForm = {
   icon: "",
 };
 
-const icons = ["😉", "😎"];
+const icons = ["🚗", "🛒", "🧾", "📈"];
 
 export default function CategoryForm({ editCategory, setEditCategory }) {
   const user = useSelector((state) => state.auth.user);

@@ -27,7 +27,7 @@ export default function TransactionList({
       return "Loading";
     }
     const category = user.categories.find((category) => category._id === id);
-    return category ? category.label : "N/A";
+    return category ? category.icon : "N/A";
   }
 
   async function remove(_id) {
