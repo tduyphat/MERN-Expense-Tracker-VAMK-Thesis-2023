@@ -4,7 +4,26 @@ export const index = async (req, res) => {
   const transaction = await Transaction.find({ user_id: req.user._id }).sort({
     createdAt: -1,
   });
-  res.json({ data: transaction });
+  const demo = await Transaction.aggregate([
+    {
+      $match: { user_id: req.user._id },
+    },
+    {
+      $group: {
+        _id: { $month: "$date" },
+        transactions: {
+          $push: {
+            amount: "$amount",
+            description: "$description",
+            date: "$date",
+            category_id: "$category_id",
+          },
+        },
+        totalExpenses: { $sum: "$amount" },
+      },
+    },
+  ]);
+  res.json({ data: demo });
 };
 
 export const create = async (req, res) => {
@@ -14,7 +33,7 @@ export const create = async (req, res) => {
     description,
     user_id: req.user._id,
     date,
-    category_id
+    category_id,
   });
   await transaction.save();
   res.json({ message: "Success" });
