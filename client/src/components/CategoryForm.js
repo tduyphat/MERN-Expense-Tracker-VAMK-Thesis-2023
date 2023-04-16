@@ -17,10 +17,13 @@ const InitialForm = {
 
 const icons = ["🚗", "🛒", "🧾", "📈"];
 
-export default function CategoryForm({ editCategory, setEditCategory }) {
+export default function CategoryForm({
+  editCategory,
+  setEditCategory,
+}) {
   const user = useSelector((state) => state.auth.user);
   const token = Cookies.get("token");
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const [form, setForm] = useState(InitialForm);
   const [editMode, setEditMode] = useState(false);
 
@@ -54,6 +57,8 @@ export default function CategoryForm({ editCategory, setEditCategory }) {
     if (res.ok) {
       dispatch(setUser({ user: _user }));
       setForm(InitialForm);
+      setEditMode(false);
+      setEditCategory({});
     }
   }
 

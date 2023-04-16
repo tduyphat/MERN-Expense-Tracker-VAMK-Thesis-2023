@@ -10,4 +10,10 @@ router.get(
   UserController.index
 );
 
+router.get(
+  "/me",
+  passport.authenticate("jwt", { session: false }),
+  UserController.getCurrentUser
+);
+
 export default router;

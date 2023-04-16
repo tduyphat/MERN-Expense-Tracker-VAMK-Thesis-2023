@@ -13,13 +13,14 @@ import IconButton from "@mui/material/IconButton";
 import Cookies from "js-cookie";
 import { setUser } from "../store/auth";
 import CategoryForm from "../components/CategoryForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Category() {
   const token = Cookies.get("token");
-  const user = useSelector((state) => state.auth.user);
+
+  const user = useSelector((state) => state.auth.user)
   const dispatch = useDispatch();
-  const [editCategory, setEditCategory] = useState({})
+  const [editCategory, setEditCategory] = useState({});
 
   function setEdit(category) {
     setEditCategory(category);
@@ -43,7 +44,10 @@ export default function Category() {
 
   return (
     <Container>
-      <CategoryForm editCategory={editCategory} setEditCategory={setEditCategory}/>
+      <CategoryForm
+        editCategory={editCategory}
+        setEditCategory={setEditCategory}
+      />
       <Typography variant="h6" sx={{ marginTop: 10 }}>
         List of Categories
       </Typography>
