@@ -16,19 +16,24 @@ import {
 import dayjs from "dayjs";
 
 export default function TransactionChart({ data }) {
-
   const chartData = data.map((item) => {
-    item.month = dayjs().month(item._id-1).format("MMMM");
+    item.month = dayjs()
+      .month(item._id - 1)
+      .format("MMMM");
     return item;
   });
 
   return (
     <Paper>
-      <Chart data={chartData}>
+      <Chart data={chartData} sx={{ marginTop: 4 }}>
         <ArgumentScale factory={scaleBand} />
         <ArgumentAxis />
         <ValueAxis />
-        <BarSeries valueField="totalExpenses" argumentField="month" color="green" />
+        <BarSeries
+          valueField="totalExpenses"
+          argumentField="month"
+          color="green"
+        />
         <Animation />
         <EventTracker />
         <Tooltip />

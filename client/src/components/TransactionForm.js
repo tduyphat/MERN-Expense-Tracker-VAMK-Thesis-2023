@@ -63,6 +63,7 @@ export default function TransactionForm({
     if (res.ok) {
       setForm(InitialForm);
       setEditMode(false);
+      setEditTransaction({});
       fetchTransactions();
     }
   }
@@ -106,7 +107,7 @@ export default function TransactionForm({
     <Card sx={{ minWidth: 275, marginTop: 10 }}>
       <CardContent>
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          Add New Transaction
+          {editMode? "Update Transaction" : "Add New Transaction"}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex" }}>
           <TextField
