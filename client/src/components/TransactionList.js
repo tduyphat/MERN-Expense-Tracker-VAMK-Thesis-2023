@@ -12,7 +12,6 @@ import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 import IconButton from "@mui/material/IconButton";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
 
 export default function TransactionList({
   data,
@@ -21,32 +20,16 @@ export default function TransactionList({
   editTransaction,
 }) {
   const token = Cookies.get("token");
-  // const user = useSelector((state) => state.auth.user);
-  const [user, setUser] = useState(useSelector((state) => state.auth.user));
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  async function getCurrentUser() {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const userData = await res.json();
-    setUser(userData);
-  }
+  const user = useSelector((state) => state.auth.user);
 
   function categoryName(id) {
-    if (!user || !user.categories) {
+    if (!user) {
       return "Loading";
     }
-    const categoryIdMatched = user.categories.find(
+    const category = user.categories.find(
       (category) => category._id === id
     );
-    return categoryIdMatched ? categoryIdMatched.icon : "N/A";
+    return category ? category.icon : "N/A";
   }
 
   async function remove(_id) {
@@ -104,6 +87,7 @@ export default function TransactionList({
                       color="warning"
                       component="label"
                       onClick={() => setEditTransaction(row)}
+                      disabled={editTransaction.amount !== undefined}
                     >
                       <EditSharpIcon />
                     </IconButton>

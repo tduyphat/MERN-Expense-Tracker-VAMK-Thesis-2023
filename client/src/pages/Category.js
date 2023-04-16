@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import Cookies from "js-cookie";
 import { setUser } from "../store/auth";
 import CategoryForm from "../components/CategoryForm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Category() {
   const token = Cookies.get("token");
@@ -76,6 +76,7 @@ export default function Category() {
                     color="warning"
                     component="label"
                     onClick={() => setEdit(row)}
+                    disabled={editCategory.label !== undefined}
                   >
                     <EditSharpIcon />
                   </IconButton>

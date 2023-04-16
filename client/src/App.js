@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setUser } from "./store/auth.js";
 
@@ -10,7 +10,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  async function fetchUser() {
+  async function fetchUser() {   
     setIsLoading(true);
     const res = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
       headers: {
