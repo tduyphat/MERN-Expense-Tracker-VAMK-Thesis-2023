@@ -32,7 +32,7 @@ export default function NavBar() {
               SpendSmartly!
             </Link>
           </Typography>
-          {user && (
+          {user && isAuthenticated && (
             <Typography sx={{ marginRight: 2 }}>
               <i>{user.firstName} logged in </i>
             </Typography>
