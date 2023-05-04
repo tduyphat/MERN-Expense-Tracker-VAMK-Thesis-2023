@@ -6,42 +6,44 @@ An expense tracking application created using MERN stack and Material-UI. User c
 
 ## How to run this project locally
 
-Clone the project
+The client and the server need to be running at the same time. Make sure you have Node installed on your machine. Download Node at: https://nodejs.org/en .
+
+Starting off by cloning the project:
 
 ```bash
   git clone https://github.com/tduyphat/MERN-Expense-Tracker-VAMK-Thesis-2023
 ```
 
-Go to the "server" directory
+Go to the "server" directory:
 
 ```bash
   cd server
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
   npm install
 ```
 
-Start the client
+Start the server:
 
 ```bash
   npm run dev
 ```
-Then open another terminal and go to the "client" directory
+Then open another terminal and go to the "client" directory:
 
 ```bash
   cd client
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
   npm install
 ```
 
-Start the server
+Start the client:
 
 ```bash
   npm start
