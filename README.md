@@ -47,5 +47,3 @@ Start the server
   npm start
 ```
 
-Or simply access the project at: https://tduyphat-expensetracker.netlify.app/login
-
